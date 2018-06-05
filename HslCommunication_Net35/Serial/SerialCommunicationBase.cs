@@ -185,6 +185,8 @@ namespace HslCommunication.Serial
 
         private void SP_ReadData_DataReceived( object sender, SerialDataReceivedEventArgs e )
         {
+            //1、此处有个Bug，如果20毫秒内未返回数据或者返回的数据不完整，则会导致报错，可以考虑将该函数修改为public virtual ，按需重载
+            //2、private resetEvent 改为 protected resetEvent
             Thread.Sleep( 20 );
             receiveCount = SP_ReadData.Read( buffer, 0, SP_ReadData.BytesToRead );
             resetEvent.Set( );
